@@ -1,0 +1,25 @@
+{
+    "CheckHideoutAreasEnabled": {
+		"Vents": true,
+		"Security": true,
+		"Lavatory": true,
+		"Stash": true,
+		"Generator": true,
+		"Heating": true,
+		"Water Collector": true,
+		"Medstation": true,
+		"Nutrition Unit": true,
+		"Rest Space": true,
+		"Workbench": true,
+		"Intelligence Center": false,
+		"Shooting Range": false,
+		"Library": false,
+		"Scav Case": false,
+		"Illumination": false,
+		"Air Filtering Unit": false,
+		"Solar Panel": false,
+		"Booze Generator": false,
+		"Bitcoin Farm": false,
+		"Christmas Tree": false
+    }
+}

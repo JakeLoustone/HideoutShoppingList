@@ -217,7 +217,13 @@ exports.mod = (mod_info) => {
 	}
 
 	let exec = (url, info, sessionID) => {
-		checkShoppingList(sessionID);
+		try {
+			checkShoppingList(sessionID);
+		} catch (error) {
+			console.log("[Mod] HideoutShoppingList has encountered an error:")
+			console.log(error.toString());
+		}
+		
 		offraid_f.saveProgress(info, sessionID);
 		return response_f.nullResponse();
 	}

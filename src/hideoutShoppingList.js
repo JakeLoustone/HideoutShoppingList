@@ -132,22 +132,24 @@ exports.mod = (mod_info) => {
 	}
 
 	let populateItemsRequiredInStash = (pmcData) => {
-		for (const [areaTypeKey, mapOfItemsValue] of areaRequiredItemsMap) {
 
-			for (const [itemIDKey, itemRequiredAmountValue] of mapOfItemsValue) {
-				if (!itemsInStashMap.has(itemIDKey)) {
+		for (const tmpItem of pmcData.Inventory.items) {
 
+			for (const [areaTypeKey, mapOfItemsValue] of areaRequiredItemsMap) {
+
+				for (const [itemIDKey, itemRequiredAmountValue] of mapOfItemsValue) {
 					let tmpItemAmountTotal = 0;
 
-					for (const tmpItem of pmcData.Inventory.items) {
+					if (itemsInStashMap.has(itemIDKey)) {
+						tmpItemAmountTotal = itemsInStashMap.get(itemIDKey);
+					}
 
-						if (tmpItem._tpl == itemIDKey) {
+					if (tmpItem._tpl == itemIDKey) {
 
-							if (tmpItem.upd.StackObjectsCount == null) {
-								tmpItemAmountTotal = tmpItemAmountTotal + 1;
-							} else {
-								tmpItemAmountTotal = tmpItemAmountTotal + tmpItem.upd.StackObjectsCount;
-							}
+						if (tmpItem.upd.StackObjectsCount == null) {
+							tmpItemAmountTotal = tmpItemAmountTotal + 1;
+						} else {
+							tmpItemAmountTotal = tmpItemAmountTotal + tmpItem.upd.StackObjectsCount;
 						}
 					}
 
@@ -212,15 +214,6 @@ exports.mod = (mod_info) => {
 
 	let numberWithCommas = (x) => {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
-
-	let findInMap = (map, val) => {
-		for (let [k, v] of map) {
-			if (v === val) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	let exec = (url, info, sessionID) => {

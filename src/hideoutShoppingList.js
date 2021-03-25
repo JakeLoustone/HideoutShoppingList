@@ -146,7 +146,7 @@ exports.mod = (mod_info) => {
 
 					if (tmpItem._tpl == itemIDKey) {
 
-						if (tmpItem.upd.StackObjectsCount == null) {
+						if (typeof(tmpItem.upd.StackObjectsCount) == 'undefined' || tmpItem.upd.StackObjectsCount == null) {
 							tmpItemAmountTotal = tmpItemAmountTotal + 1;
 						} else {
 							tmpItemAmountTotal = tmpItemAmountTotal + tmpItem.upd.StackObjectsCount;

@@ -146,7 +146,7 @@ exports.mod = (mod_info) => {
 
 					if (tmpItem._tpl == itemIDKey) {
 
-						if (typeof(tmpItem.upd.StackObjectsCount) == 'undefined' || tmpItem.upd.StackObjectsCount == null) {
+						if (typeof (tmpItem.upd) == 'undefined' || tmpItem.upd == null || typeof (tmpItem.upd.StackObjectsCount) == 'undefined' || tmpItem.upd.StackObjectsCount == null) {
 							tmpItemAmountTotal = tmpItemAmountTotal + 1;
 						} else {
 							tmpItemAmountTotal = tmpItemAmountTotal + tmpItem.upd.StackObjectsCount;
@@ -223,7 +223,7 @@ exports.mod = (mod_info) => {
 			console.log("[Mod] HideoutShoppingList has encountered an error:")
 			console.log(error.toString());
 		}
-		
+
 		offraid_f.saveProgress(info, sessionID);
 		return response_f.nullResponse();
 	}

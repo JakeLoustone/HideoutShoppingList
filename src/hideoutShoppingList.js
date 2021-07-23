@@ -8,6 +8,7 @@ exports.mod = (mod_info) => {
 	let hareas = fileIO.readParsed(global.db.user.cache.hideout_areas);
 	let locale = fileIO.readParsed(global.db.user.cache.locale_en);
 	let hideoutShoppingListString = "";
+	let foundOrphan = false;
 
 	let HideoutAreaTypeToNameMap = new Map()
 	HideoutAreaTypeToNameMap.set(0, "Vents");
@@ -134,6 +135,15 @@ exports.mod = (mod_info) => {
 	let populateItemsRequiredInStash = (pmcData) => {
 
 		for (const tmpItem of pmcData.Inventory.items) {
+			
+			// Ignore orphan items
+			if(isOrphan(pmcData.Inventory.items, tmpItem)){
+				foundOrphan = true;
+			
+				continue;
+			}
+			
+			let foundTemplateInReqs = false;
 
 			for (const [areaTypeKey, mapOfItemsValue] of areaRequiredItemsMap) {
 
@@ -151,11 +161,26 @@ exports.mod = (mod_info) => {
 						} else {
 							tmpItemAmountTotal = tmpItemAmountTotal + tmpItem.upd.StackObjectsCount;
 						}
+						
+						foundTemplateInReqs = true;
 					}
 
 					itemsInStashMap.set(itemIDKey, tmpItemAmountTotal);
+					
+					if(foundTemplateInReqs){
+						break;
+					}
+				}
+					
+				if(foundTemplateInReqs){
+					break;
 				}
 			}
+		}
+	
+		// Warn that an orphan has been found is necessary
+		if(foundOrphan){
+			console.log("[Mod] HideoutShoppingList: Found orphan item in inventory! Consider cleaning your character.json");
 		}
 	}
 
@@ -214,6 +239,15 @@ exports.mod = (mod_info) => {
 
 	let numberWithCommas = (x) => {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	let isOrphan = (items, item) => {
+		for(const otherItem of items){
+			if(otherItem._id == item.parentId){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	let exec = (url, info, sessionID) => {

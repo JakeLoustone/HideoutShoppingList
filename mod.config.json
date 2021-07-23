@@ -1,7 +1,7 @@
 {
 	"name": "HideoutShoppingList",
 	"author": "JakeLoustone",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"license": "MIT",
 	"src": {
 		"src/hideoutShoppingList.js": "TamperModLoad"

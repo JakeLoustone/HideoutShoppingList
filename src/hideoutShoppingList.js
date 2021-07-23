@@ -178,7 +178,7 @@ exports.mod = (mod_info) => {
 			}
 		}
 	
-		// Warn that an orphan has been found is necessary
+		// Warn that an orphan has been found if necessary
 		if(foundOrphan){
 			console.log("[Mod] HideoutShoppingList: Found orphan item in inventory! Consider cleaning your character.json");
 		}

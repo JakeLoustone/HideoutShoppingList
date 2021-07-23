@@ -242,6 +242,9 @@ exports.mod = (mod_info) => {
 	}
 
 	let isOrphan = (items, item) => {
+		if(item.parentId == null){
+			return false;
+		}
 		for(const otherItem of items){
 			if(otherItem._id == item.parentId){
 				return false;

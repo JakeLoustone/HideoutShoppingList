@@ -54,6 +54,9 @@ exports.mod = (mod_info) => {
 	}
 
 	let updateExistingShoppingListIndex = (pmcData) => {
+		
+		// Reset the index because the list may have been deleted
+		existingShoppinglistIndex = -1;
 
 		for (let i in pmcData.Notes.Notes) {
 			let currentNote = pmcData.Notes.Notes[i];
@@ -73,6 +76,10 @@ exports.mod = (mod_info) => {
 
 	let populateItemsRequiredAmount = (pmcData) => {
 
+		// Reset the required items map because the area may have been completed since the start of the session
+		// We don't want to keep the requirements in the list if it was
+		areaRequiredItemsMap = new Map();
+	
 		for (let areaPmcData of pmcData.Hideout.Areas) {
 
 			//If its at starting level just skip it, the player is probably not trying to work on upgrading it from 0 yet?
@@ -134,6 +141,9 @@ exports.mod = (mod_info) => {
 
 	let populateItemsRequiredInStash = (pmcData) => {
 
+		// Reset items in stash map because otherwise the totals build up every time we recount them after each raid
+		itemsInStashMap = new Map();
+	
 		for (const tmpItem of pmcData.Inventory.items) {
 			
 			// Ignore orphan items
